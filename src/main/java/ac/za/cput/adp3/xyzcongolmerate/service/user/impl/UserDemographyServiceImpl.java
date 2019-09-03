@@ -13,7 +13,7 @@ public class UserDemographyServiceImpl implements UserDemographyService {
     private static UserDemographyService userDemographyService = null;
 
     private UserDemographyServiceImpl() {
-        this.userDemographyRepository = UserDemographyRepositoryImpl.getUserDemographyRepository();
+        this.userDemographyRepository = UserDemographyRepositoryImpl.getUsrDemRepo();
     }
 
     public static UserDemographyService getUserDemographyService() {

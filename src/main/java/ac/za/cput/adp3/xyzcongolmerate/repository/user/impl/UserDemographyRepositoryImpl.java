@@ -8,45 +8,54 @@ import java.util.Set;
 
 public class UserDemographyRepositoryImpl implements UserDemographyRepository {
 
-    private Set<UserDemography> userDemographyDB;
-    private static UserDemographyRepository userDemographyRepository = null;
+    private Set<UserDemography> usrDemDBase;
+    private static UserDemographyRepository usrDemRepo = null;
 
     private UserDemographyRepositoryImpl() {
-        this.userDemographyDB = new HashSet<>();
+        this.usrDemDBase = new HashSet<>();
     }
 
-    public static UserDemographyRepository getUserDemographyRepository() {
-        if (userDemographyRepository == null) userDemographyRepository = new UserDemographyRepositoryImpl();
-        return userDemographyRepository;
+    public UserDemography findUD(String userEmail){
+        return this.usrDemDBase.stream().filter(user -> user.getUserEmail().trim().equals(userEmail)).findAny().orElse(null);
     }
 
-    //TODO: Implement body
+    public static UserDemographyRepository getUsrDemRepo() {
+        if (usrDemRepo == null) usrDemRepo = new UserDemographyRepositoryImpl();
+        return usrDemRepo;
+    }
+
     @Override
-    public UserDemography create(UserDemography userDemography) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public UserDemography create(UserDemography usrDem) {
+        this.usrDemDBase.add(usrDem);
+        return usrDem;
     }
 
-    //TODO: Implement body
     @Override
-    public UserDemography read(String userEmail) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public UserDemography read(String userEMail) {
+        UserDemography u = findUD(userEMail);
+        return u;
     }
 
-    //TODO: Implement body
     @Override
-    public UserDemography update(UserDemography userDemography) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public UserDemography update(UserDemography usrDem) {
+        UserDemography del = findUD(usrDem.getUserEmail());
+        if(del != null){
+            this.usrDemDBase.remove(del);
+            return create(usrDem);
+        }
+        return null;
     }
 
-    //TODO: Implement body
     @Override
-    public void delete(String userEmail) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void delete(String usrEMail) {
+        UserDemography u = findUD(usrEMail);
+        if (u != null) {
+            usrDemDBase.remove(u);
+        }
     }
 
-    //TODO: Implement body
     @Override
     public Set<UserDemography> getAll() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.usrDemDBase;
     }
 }

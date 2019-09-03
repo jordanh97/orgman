@@ -8,45 +8,54 @@ import java.util.Set;
 
 public class UserRepositoryImpl implements UserRepository {
 
-    private Set<User> userDB;
-    private static UserRepository userRepository = null;
+    private static UserRepository usrRepo = null;
+    private Set<User> usrDBase;
 
     private UserRepositoryImpl() {
-        this.userDB = new HashSet<>();
+        this.usrDBase = new HashSet<>();
     }
 
-    public static UserRepository getUserRepository() {
-        if (userRepository == null) userRepository = new UserRepositoryImpl();
-        return userRepository;
+    public User findUser(String userEMail){
+        return this.usrDBase.stream().filter(user -> user.getUserEmail().trim().equals(userEMail)).findAny().orElse(null);
     }
 
-    //TODO: Implement body
+    public static UserRepository getUsrRepo() {
+        if (usrRepo == null) usrRepo = new UserRepositoryImpl();
+        return usrRepo;
+    }
+
     @Override
-    public User create(User user) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public User create(User u) {
+        this.usrDBase.add(u);
+        return u;
     }
 
-    //TODO: Implement body
     @Override
-    public User read(String email) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public User read(String eMail) {
+        User u = findUser(eMail);
+        return u;
     }
 
-    //TODO: Implement body
     @Override
-    public User update(User user) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public User update(User uu) {
+        User so = findUser(uu.getUserEmail());
+        if(so != null){
+            this.usrDBase.remove(so);
+            return create(uu);
+        }
+        return null;
     }
 
-    //TODO: Implement body
     @Override
-    public void delete(String email) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void delete(String eMail) {
+        User u = findUser(eMail);
+        if (u != null) {
+            usrDBase.remove(u);
+        }
     }
 
-    //TODO: Implement body
     @Override
     public Set<User> getAll() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.usrDBase;
     }
 }

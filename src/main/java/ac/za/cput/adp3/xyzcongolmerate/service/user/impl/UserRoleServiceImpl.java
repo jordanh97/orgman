@@ -13,7 +13,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     private static UserRoleService userRoleService = null;
 
     private UserRoleServiceImpl() {
-        this.userRoleRepository = UserRoleRepositoryImpl.getUserRoleRepository();
+        this.userRoleRepository = UserRoleRepositoryImpl.getUsrRRepo();
     }
 
     public static UserRoleService getUserRoleService() {

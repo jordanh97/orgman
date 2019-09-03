@@ -8,45 +8,52 @@ import java.util.Set;
 
 public class RoleRepositoryImpl implements RoleRepository {
 
-    private Set<Role> roleDB;
-    private static RoleRepository roleRepository = null;
+    private static RoleRepository rRepo = null;
+    private Set<Role> rleDBase;
 
     private RoleRepositoryImpl() {
-        this.roleDB = new HashSet<>();
+        this.rleDBase = new HashSet<>();
     }
 
-    public static RoleRepository getRoleRepository() {
-        if (roleRepository == null) roleRepository = new RoleRepositoryImpl();
-        return roleRepository;
+    public static RoleRepository getrRepo() {
+        if (rRepo == null) rRepo = new RoleRepositoryImpl();
+        return rRepo;
     }
 
-    //TODO: Implement body
-    @Override
-    public Role create(Role role) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    private Role searchForRole(String roleId) {
+        return this.rleDBase.stream()
+                .filter(role -> role.getRoleId().trim().equals(roleId))
+                .findAny()
+                .orElse(null);
     }
 
-    //TODO: Implement body
-    @Override
-    public Role read(String roleId) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Role create(Role rle) {
+        this.rleDBase.add(rle);
+        return rle;
     }
 
-    //TODO: Implement body
-    @Override
+    public Role read(String rleId) {
+        Role role = searchForRole(rleId);
+        return role;
+    }
+
     public Role update(Role role) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Role del = searchForRole(role.getRoleId());
+        if(del != null){
+            this.rleDBase.remove(del);
+            return create(role);
+        }
+        return null;
     }
 
-    //TODO: Implement body
-    @Override
     public void delete(String roleId) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Role del = searchForRole(roleId);
+        if (del != null){
+            this.rleDBase.remove(del);
+        }
     }
 
-    //TODO: Implement body
-    @Override
     public Set<Role> getAll() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.rleDBase;
     }
 }

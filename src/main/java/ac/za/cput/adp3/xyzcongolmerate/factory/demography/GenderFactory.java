@@ -7,9 +7,9 @@ public class GenderFactory {
 
     private static final String SUFFIX = Helper.getSuffixFromClassName(GenderFactory.class); // Expecting GF from (G)ender(F)actory.
 
-    //TODO: implement method body ONLY!
-    public static Gender buildGender(String genderDescription) {
-        throw new UnsupportedOperationException("Not yet supported!");
+    public static Gender buildGender(String genDesc) {
+        return new Gender.Builder().genderId(Helper.generateRandomGivenSuffix(SUFFIX)).genderDescription(genDesc).build();
+
         /**
          * Your implementation goes here
          * INSTRUCTIONS

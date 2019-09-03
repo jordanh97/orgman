@@ -13,7 +13,7 @@ public class UserServiceImpl implements UserService {
     private static UserService userService = null;
 
     private UserServiceImpl() {
-        this.userRepository = UserRepositoryImpl.getUserRepository();
+        this.userRepository = UserRepositoryImpl.getUsrRepo();
     }
 
     public static UserService getUserService() {

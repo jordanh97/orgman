@@ -8,47 +8,57 @@ import java.util.Set;
 
 public class OrganisationUserRepositoryImpl implements OrganisationUserRepository {
 
-    private Set<OrganisationUser> organisationUserDB;
-    private static OrganisationUserRepository organisationUserRepository = null;
+    private static OrganisationUserRepository oURepo = null;
+    private Set<OrganisationUser> oUDBase;
 
     private OrganisationUserRepositoryImpl() {
-        this.organisationUserDB = new HashSet<>();
+        this.oUDBase = new HashSet<>();
     }
 
-    public static OrganisationUserRepository getOrganisationUserRepository() {
-        if (organisationUserRepository == null) organisationUserRepository = new OrganisationUserRepositoryImpl();
-        return organisationUserRepository;
+    public static OrganisationUserRepository getoUR() {
+        if (oURepo == null) oURepo = new OrganisationUserRepositoryImpl();
+        return oURepo;
     }
 
-    //TODO: Implement body
+    private OrganisationUser searchForOU(String o) {
+        return this.oUDBase.stream()
+                .filter(org -> org.getUserEmail().trim().equals(o))
+                .findAny()
+                .orElse(null);
+    }
+
+
     @Override
-    public OrganisationUser create(OrganisationUser organisationUser) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public OrganisationUser create(OrganisationUser oUS) {
+        this.oUDBase.add(oUS);
+        return oUS;
     }
 
-    //TODO: Implement body
     @Override
-    public OrganisationUser read(String orgCode, String userEmail) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public OrganisationUser read(String ogCode, String userEMail) {
+        OrganisationUser o = searchForOU(userEMail);
+        return o;
     }
 
-    //TODO: Implement body
     @Override
-    public OrganisationUser update(OrganisationUser organisationUser) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public OrganisationUser update(OrganisationUser oU) {
+        OrganisationUser del = searchForOU(oU.getUserEmail());
+        if (del != null) {
+            this.oUDBase.remove(del);
+            return create(oU);
+        }
+        return null;
     }
 
-    //TODO: Implement body
     @Override
-    public void delete(String orgCode, String userEmail) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void delete(String ogCode, String userEMail) {
+        OrganisationUser dep = searchForOU(userEMail);
+        if (dep != null) this.oUDBase.remove(dep);
     }
 
-    //TODO: Implement body
     @Override
     public Set<OrganisationUser> getAll() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.oUDBase;
     }
-
 
 }

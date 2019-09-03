@@ -8,45 +8,53 @@ import java.util.Set;
 
 public class UserRoleRepositoryImpl implements UserRoleRepository {
 
-    private Set<UserRole> userRoleDB;
-    private static UserRoleRepository userRoleRepository = null;
+    private Set<UserRole> usrRDBase;
+    private static UserRoleRepository usrRRepo = null;
 
     private UserRoleRepositoryImpl() {
-        this.userRoleDB = new HashSet<>();
+        this.usrRDBase = new HashSet<>();
     }
 
-    public static UserRoleRepository getUserRoleRepository() {
-        if (userRoleRepository == null) userRoleRepository = new UserRoleRepositoryImpl();
-        return userRoleRepository;
+
+    public UserRole findUR(String uEMail){
+        return this.usrRDBase.stream().filter(user -> user.getUserEmail().trim().equals(uEMail)).findAny().orElse(null);
     }
 
-    //TODO: Implement body
+    public static UserRoleRepository getUsrRRepo() {
+        if (usrRRepo == null) usrRRepo = new UserRoleRepositoryImpl();
+        return usrRRepo;
+    }
+
     @Override
-    public UserRole create(UserRole userRole) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public UserRole create(UserRole uRole) {
+        usrRDBase.add(uRole);
+        return uRole;
     }
 
-    //TODO: Implement body
     @Override
-    public UserRole read(UserRole userRole) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public UserRole read(UserRole uRole) { UserRole u = findUR(uRole.getUserEmail());
+        return u;
     }
 
-    //TODO: Implement body
     @Override
-    public UserRole update(UserRole userRole) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public UserRole update(UserRole uRole) { UserRole seo = findUR(uRole.getUserEmail());
+        if(seo != null){
+            this.usrRDBase.remove(seo);
+            return create(uRole);
+        }
+        return null;
     }
 
-    //TODO: Implement body
     @Override
-    public void delete(UserRole userRole) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void delete(UserRole uRole) { UserRole user = findUR(uRole.getUserEmail());
+        if (user != null) {
+            usrRDBase.remove(user);
+
+        }
     }
 
-    //TODO: Implement body
     @Override
     public Set<UserRole> getAll() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.usrRDBase;
     }
 }

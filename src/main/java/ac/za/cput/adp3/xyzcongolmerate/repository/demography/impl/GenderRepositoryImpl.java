@@ -8,45 +8,55 @@ import java.util.Set;
 
 public class GenderRepositoryImpl implements GenderRepository {
 
-    private static GenderRepository genderRepository = null;
-    private Set<Gender> genderDB;
+    private Set<Gender> gnderDBase;
+    private static GenderRepository gnderRepo = null;
 
     private GenderRepositoryImpl() {
-        this.genderDB = new HashSet<>();
+        this.gnderDBase = new HashSet<>();
+    }
+
+    private Gender sourceGendr(String genId) {
+        return this.gnderDBase.stream()
+                .filter(gender -> gender.getGenderId().trim().equals(genId))
+                .findAny()
+                .orElse(null);
     }
 
     public static GenderRepository genderRepository() {
-        if (genderRepository == null) genderRepository = new GenderRepositoryImpl();
-        return genderRepository;
+        if( gnderRepo == null) gnderRepo = new GenderRepositoryImpl();
+        return gnderRepo;
     }
 
-    //TODO: Implement body
     @Override
-    public Gender create(Gender gender) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Gender create(Gender gnder) {
+        this.gnderDBase.add(gnder);
+        return gnder;
     }
 
-    //TODO: Implement body
     @Override
-    public Gender read(String genderId) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Gender read(String gnderId) {
+        Gender gnder = sourceGendr(gnderId);
+        return gnder;
     }
 
-    //TODO: Implement body
     @Override
-    public Gender update(Gender gender) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Gender update(Gender gnder) {
+        Gender delete = sourceGendr(gnder.getGenderId());
+        if (delete != null) {
+            this.gnderDBase.remove(delete);
+            return create(gnder);
+        }
+        return null;
     }
 
-    //TODO: Implement body
     @Override
-    public void delete(String genderId) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void delete(String gnderId) {
+        Gender gnder = sourceGendr(gnderId);
+        if (gnder != null) this.gnderDBase.remove(gnder);
     }
 
-    //TODO: Implement body
     @Override
     public Set<Gender> getAll() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.gnderDBase;
     }
 }

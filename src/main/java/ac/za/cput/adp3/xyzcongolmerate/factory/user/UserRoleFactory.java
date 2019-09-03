@@ -4,9 +4,10 @@ import ac.za.cput.adp3.xyzcongolmerate.domain.user.UserRole;
 
 public class UserRoleFactory {
 
-    //TODO: implement method body ONLY!
-    public static UserRole buildUserRole(String orgCode, String userEmail, String roleId) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public static UserRole buildUserRole(String oCde, String usrEMail, String rleId) {
+        UserRole usrRle = new UserRole(oCde, usrEMail, rleId);
+        return usrRle;
+
         /**
          * Your implementation goes here
          * INSTRUCTIONS

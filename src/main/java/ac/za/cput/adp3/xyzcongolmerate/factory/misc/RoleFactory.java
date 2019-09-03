@@ -7,9 +7,9 @@ public class RoleFactory {
 
     private static final String SUFFIX = Helper.getSuffixFromClassName(RoleFactory.class); // Expecting RF from (R)ole(F)actory.
 
-    //TODO: implement method body ONLY!
-    public static Role buildRole(String roleName) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public static Role buildRole(String rleNm) {
+        return new Role.Builder().roleId(Helper.generateRandomGivenSuffix(SUFFIX)).roleName(rleNm).build();
+
         /**
          * Your implementation goes here
          * INSTRUCTIONS

@@ -13,7 +13,7 @@ public class OrganisationUserServiceImpl implements OrganisationUserService {
     private static OrganisationUserService organisationUserService = null;
 
     private OrganisationUserServiceImpl() {
-        this.organisationUserRepository = OrganisationUserRepositoryImpl.getOrganisationUserRepository();
+        this.organisationUserRepository = OrganisationUserRepositoryImpl.getoUR();
     }
 
     public OrganisationUserService getOrganisationUserService() {

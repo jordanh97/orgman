@@ -8,45 +8,57 @@ import java.util.Set;
 
 public class OrganisationRepositoryImpl implements OrganisationRepository {
 
-    private Set<Organisation> organisationDB;
-    private static OrganisationRepository organisationRepository = null;
+    private Set<Organisation> orgDBase;
+    private static OrganisationRepository oRepo = null;
+
+    public static OrganisationRepository getoRepo() {
+        if (oRepo == null) oRepo = new OrganisationRepositoryImpl();
+        return oRepo;
+    }
+
+    private Organisation findOrganisation(String orgID) {
+        return this.orgDBase.stream()
+                .filter(organisation -> organisation.getOrgCode().trim().equals(orgID))
+                .findAny()
+                .orElse(null);
+    }
 
     private OrganisationRepositoryImpl() {
-        this.organisationDB = new HashSet<>();
+        this.orgDBase = new HashSet<>();
     }
 
-    public static OrganisationRepository getOrganisationRepository() {
-        if (organisationRepository == null) organisationRepository = new OrganisationRepositoryImpl();
-        return organisationRepository;
-    }
-
-    //TODO: Implement body
     @Override
-    public Organisation create(Organisation organisation) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Organisation create(Organisation org) {
+        this.orgDBase.add(org);
+        return org;
     }
 
-    //TODO: Implement body
     @Override
-    public Organisation read(String orgCode) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Organisation read(String orgSoul) {
+        Organisation o = findOrganisation(orgSoul);
+        return o;
     }
 
-    //TODO: Implement body
     @Override
-    public Organisation update(Organisation organisation) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Organisation update(Organisation org) {
+        Organisation del = findOrganisation(org.getOrgCode());
+        if (del != null) {
+            this.orgDBase.remove(del);
+            return create(org);
+        }
+        return null;
     }
 
-    //TODO: Implement body
     @Override
     public void delete(String orgCode) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Organisation seo = findOrganisation(orgCode);
+        if (seo != null){
+            this.orgDBase.remove(seo);
+        }
     }
 
-    //TODO: Implement body
     @Override
     public Set<Organisation> getAll() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.orgDBase;
     }
 }

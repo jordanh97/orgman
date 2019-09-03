@@ -4,9 +4,9 @@ import ac.za.cput.adp3.xyzcongolmerate.domain.user.User;
 
 public class UserFactory {
 
-    //TODO: implement method body ONLY!
-    public static User buildUser(String userEmail, String firstName, String lastName) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public static User buildUser(String usrEMail, String fN, String lN) {
+        return new User.Builder().userEmail(usrEMail).firstName(fN).lastName(lN).build();
+
         /**
          * Your implementation goes here
          * INSTRUCTIONS

@@ -8,45 +8,58 @@ import java.util.Set;
 
 public class RaceRepositoryImpl implements RaceRepository {
 
-    private Set<Race> raceDB;
-    private static RaceRepository raceRepository = null;
+    private Set<Race> rceDBse;
+    private static RaceRepository rceRepo = null;
 
     private RaceRepositoryImpl() {
-        this.raceDB = new HashSet<>();
+        this.rceDBse = new HashSet<>();
+    }
+
+    private Race findRace(String raceId) {
+        return this.rceDBse.stream()
+                .filter(race -> race.getRaceId().trim().equals(raceId))
+                .findAny()
+                .orElse(null);
     }
 
     public static RaceRepository getRaceRepository() {
-        if (raceRepository == null) raceRepository = new RaceRepositoryImpl();
-        return raceRepository;
+        if (rceRepo == null) rceRepo = new RaceRepositoryImpl();
+        return rceRepo;
     }
 
-    //TODO: Implement body
     @Override
     public Race create(Race race) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.rceDBse.add(race);
+        return race;
     }
 
-    //TODO: Implement body
     @Override
     public Race read(String raceId) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Race race = findRace(raceId);
+        return race;
     }
 
     //TODO: Implement body
     @Override
     public Race update(Race race) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Race toDelete = findRace(race.getRaceId());
+        if (toDelete != null) {
+            this.rceDBse.remove(toDelete);
+            return create(race);
+        }
+        return null;
     }
 
     //TODO: Implement body
     @Override
     public void delete(String raceId) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Race race = findRace(raceId);
+        if (race != null) this.rceDBse.remove(race);
     }
 
     //TODO: Implement body
     @Override
     public Set<Race> getAll() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.rceDBse;
     }
 }
