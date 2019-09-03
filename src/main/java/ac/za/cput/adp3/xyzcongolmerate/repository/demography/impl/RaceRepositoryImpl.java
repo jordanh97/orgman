@@ -39,25 +39,22 @@ public class RaceRepositoryImpl implements RaceRepository {
         return race;
     }
 
-    //TODO: Implement body
     @Override
     public Race update(Race race) {
-        Race toDelete = findRace(race.getRaceId());
-        if (toDelete != null) {
-            this.rceDBse.remove(toDelete);
+        Race del = findRace(race.getRaceId());
+        if (del != null) {
+            this.rceDBse.remove(del);
             return create(race);
         }
         return null;
     }
 
-    //TODO: Implement body
     @Override
     public void delete(String raceId) {
         Race race = findRace(raceId);
         if (race != null) this.rceDBse.remove(race);
     }
 
-    //TODO: Implement body
     @Override
     public Set<Race> getAll() {
         return this.rceDBse;

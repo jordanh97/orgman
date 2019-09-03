@@ -8,12 +8,5 @@ public class UserRoleFactory {
         UserRole usrRle = new UserRole(oCde, usrEMail, rleId);
         return usrRle;
 
-        /**
-         * Your implementation goes here
-         * INSTRUCTIONS
-         * 1. Remove line [//TODO: implement method body ONLY!]
-         * 2. Remove line [throw new UnsupportedOperationException("Not supported yet.");]
-         * 3. Build and return an object of UserRole
-         */
     }
 }
