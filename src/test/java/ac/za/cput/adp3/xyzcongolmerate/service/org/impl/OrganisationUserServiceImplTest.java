@@ -1,8 +1,15 @@
 package ac.za.cput.adp3.xyzcongolmerate.service.org.impl;
 
+import ac.za.cput.adp3.xyzcongolmerate.domain.demography.Gender;
+import ac.za.cput.adp3.xyzcongolmerate.domain.org.Organisation;
+import ac.za.cput.adp3.xyzcongolmerate.service.org.OrganisationUserService;
+import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import ac.za.cput.adp3.xyzcongolmerate.service.org.OrganisationUserService;
+
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -36,11 +43,20 @@ public class OrganisationUserServiceImplTest {
 
     @Test
     public void e_getUserFullNamesInOrganisation() {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        Organisation o = new Organisation.Builder().orgCode("123").orgName("ABC").build();
+        String k = o.getOrgCode();
+        OrganisationUserService getOrganisationUserService = null;
+       Set<String> s = getOrganisationUserService.getUserFullNamesInOrganisation(k);
+        Set<String> v = getOrganisationUserService.getUserFullNamesInOrganisation(k);
+       Assert.assertEquals(s, v);
+
     }
 
     @Test
     public void f_getUserOrganisations() {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        Organisation o = new Organisation.Builder().orgCode("123").orgName("ABC").build();
+
     }
 }
