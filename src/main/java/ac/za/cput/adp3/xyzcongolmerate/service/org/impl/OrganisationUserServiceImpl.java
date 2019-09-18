@@ -49,12 +49,13 @@ public class OrganisationUserServiceImpl implements OrganisationUserService {
     //TODO: Implement body - Question 1: Service that returns fullnames (as Set) of users in organisation given orgCode
     @Override
     public Set<String> getUserFullNamesInOrganisation(String orgCode) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return organisationUserService.getUserFullNamesInOrganisation(orgCode);
     }
 
     //TODO: Implement body - Question 2: Service that returns names of organisations (as Set) a user belongs to given userEmail
     @Override
     public Set<String> getUserOrganisations(String userEmail) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return organisationUserService.getUserOrganisations(userEmail);
+
     }
 }
